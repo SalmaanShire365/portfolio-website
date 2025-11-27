@@ -1,6 +1,6 @@
 body {
-  background-color: #f0f0f0;
-  color: #000080;
+  background-color: #e8f5e9;
+  color: #1b5e20;
   font-family: "Courier New", monospace;
   text-align: center;
 }
@@ -8,23 +8,23 @@ body {
 .container {
   width: 80%;
   margin: auto;
-  border: 3px dashed #000080;
+  border: 3px dashed #2e7d32;
   padding: 20px;
-  background: #fff url("https://www.transparenttextures.com/patterns/old-wall.png");
+  background: #ffffff url("https://www.transparenttextures.com/patterns/old-wall.png");
 }
 
 a {
-  color: #ff0000;
+  color: #c62828;
   text-decoration: underline;
 }
 
 h1, h2 {
-  color: #008000;
-  text-shadow: 1px 1px 0px #000;
+  color: #1b5e20;
+  text-shadow: 2px 2px 0px #81c784;
 }
 
 pre {
-  color: #800000;
+  color: #388e3c;
   font-weight: bold;
 }
 
@@ -43,9 +43,9 @@ footer {
 }
 
 .project-card {
-  background-color: #000080;
-  color: #00ff00;
-  border: 2px solid #00ff00;
+  background-color: #2e7d32;
+  color: #e8f5e9;
+  border: 2px solid #66bb6a;
   padding: 15px;
   width: 220px;
   text-align: center;
@@ -54,15 +54,14 @@ footer {
 }
 
 .project-card a {
-  color: #ffff00;
+  color: #aed581;
   text-decoration: underline;
   display: inline-block;
   margin-top: 5px;
 }
 
 .project-card:hover {
-  background-color: #00ff00;
-  color: #000080;
-  border-color: #ff0000;
+  background-color: #66bb6a;
+  color: #1b5e20;
+  border-color: #2e7d32;
 }
-
