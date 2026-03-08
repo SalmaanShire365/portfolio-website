@@ -1,0 +1,23 @@
+.home { 
+    padding: 120px;
+    border-radius: 18px;
+    max-width: 500px;
+    margin: 120px auto;
+    text-align: center;
+}
+.home h1 {
+    color: #ffffff;
+    margin-bottom: 30px;
+}
+.home p {
+    color: #ffffff;
+    font-size: 18px;
+    line-height: 2.0;
+}
+.home a {
+    color: #007bff;
+    text-decoration: none;
+}
+.home a:hover {
+    text-decoration: underline;
+}
