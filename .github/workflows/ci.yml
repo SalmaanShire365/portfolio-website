@@ -8,7 +8,7 @@ on:
 
 jobs:
   ci:
-    name: Lint & Build
+    name: Lint, Test & Build
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -28,6 +28,9 @@ jobs:
 
       - name: Lint (ESLint)
         run: npm run lint
+
+      - name: Run tests (Vitest)
+        run: npm test
 
       - name: Build
         run: npm run build
