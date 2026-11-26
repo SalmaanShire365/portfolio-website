@@ -1,29 +1,106 @@
-import About from './pages/About';
-import ThemeProvider, {useTheme} from './components/ThemeProvider';
+import ThemeProvider, { useTheme } from './components/ThemeProvider';
 import { lightTheme, darkTheme } from './theme/theme';
-import styled, { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import styled, { ThemeProvider as StyledThemeProvider, createGlobalStyle } from 'styled-components';
 import Navbar from './components/Navbar';
+import About from './pages/About';
+import LineReady from './pages/LineReady';
 import Projects from './pages/Projects';
+import Setup from './pages/Setup';
 import Footer from './components/Footer';
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${p => p.theme.background};
+    color: ${p => p.theme.text};
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  ::selection {
+    background: ${p => p.theme.accent};
+    color: ${p => p.theme.background};
+  }
+
+  :focus-visible {
+    outline: 2px solid ${p => p.theme.accent};
+    outline-offset: 2px;
+  }
+`;
+
 const Wrapper = styled.div`
-  background-color: ${props => props.theme.background};
-  color: ${props => props.theme.text};
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+
+  /* faint CRT scanlines in dark mode only */
+  &::after {
+    content: '';
+    display: ${p => (p.theme.name === 'crt' ? 'block' : 'none')};
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 200;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.025) 0,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
 `;
 
-const Button = styled.button`
-  background-color: transparent;
-  font-size: 1rem;
-  border: 2px solid ${props => props.theme.text};
-  color: ${props => props.theme.text};
-  padding: 10px 20px;
+const Main = styled.main`
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  @media (max-width: 600px) {
+    padding: 0 1rem;
+  }
+`;
+
+const ToggleBtn = styled.button`
+  background: transparent;
+  color: ${p => p.theme.navText};
+  border: 1px solid ${p => p.theme.navText};
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
   cursor: pointer;
-  outline: none;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+  &:hover {
+    background: ${p => p.theme.accent};
+    border-color: ${p => p.theme.accent};
+    color: ${p => p.theme.navBg};
+  }
+`;
+
+const NavBar = styled.header`
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  background: ${p => p.theme.navBg};
+  color: ${p => p.theme.navText};
+  border-bottom: 1px solid ${p => p.theme.border};
+`;
+
+const NavRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  @media (max-width: 600px) {
+    padding: 0 1rem;
+  }
 `;
 
 const App = () => {
@@ -32,14 +109,22 @@ const App = () => {
 
   return (
     <StyledThemeProvider theme={currentTheme}>
+      <GlobalStyle />
       <Wrapper>
-        <Navbar />
-        <Button onClick={toggleDarkMode}>
-          <img src="/assets/darkmode.svg" alt="" />
-          {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-        </Button>
-        <About />
-        <Projects />
+        <NavBar>
+          <NavRow>
+            <Navbar />
+            <ToggleBtn onClick={toggleDarkMode} aria-label={darkMode ? 'Light mode' : 'Dark mode'}>
+              {darkMode ? '[ light ]' : '[ dark ]'}
+            </ToggleBtn>
+          </NavRow>
+        </NavBar>
+        <Main>
+          <About />
+          <LineReady />
+          <Projects />
+          <Setup />
+        </Main>
         <Footer />
       </Wrapper>
     </StyledThemeProvider>

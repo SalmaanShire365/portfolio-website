@@ -10,17 +10,17 @@ describe('App', () => {
 
   it('renders the dark mode toggle button', () => {
     render(<AppWrapper />)
-    expect(screen.getByRole('button', { name: /switch to dark mode/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /dark/i })).toBeInTheDocument()
   })
 
   it('toggles to light mode when button is clicked', async () => {
     const user = userEvent.setup()
     render(<AppWrapper />)
 
-    const button = screen.getByRole('button', { name: /switch to dark mode/i })
+    const button = screen.getByRole('button', { name: /dark/i })
     await user.click(button)
 
-    expect(screen.getByRole('button', { name: /switch to light mode/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /light/i })).toBeInTheDocument()
   })
 
   it('renders the Footer', () => {
