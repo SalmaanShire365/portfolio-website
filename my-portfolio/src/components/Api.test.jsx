@@ -1,35 +1,32 @@
 import { render, screen } from '@testing-library/react'
+import { ThemeProvider as StyledThemeProvider } from 'styled-components'
+import { lightTheme } from '../theme/theme'
 import Projects from '../pages/Projects.jsx'
+import { PROJECTS } from '../data/projects'
 
-// Mock MUI Grid to avoid style/layout issues in tests
-vi.mock('@mui/material', () => ({
-  Grid: ({ children }) => <div>{children}</div>,
-}))
+const wrapper = ({ children }) => (
+  <StyledThemeProvider theme={lightTheme}>{children}</StyledThemeProvider>
+)
 
 describe('Projects', () => {
   it('renders the section heading', () => {
-    render(<Projects />)
+    render(<Projects />, { wrapper })
     expect(screen.getByText('My Projects')).toBeInTheDocument()
   })
 
-  it('renders all three project cards', () => {
-    render(<Projects />)
-    expect(screen.getByText('Inventory Defect Monitoring System')).toBeInTheDocument()
-    expect(screen.getByText('Healthcare Claims Processing API')).toBeInTheDocument()
-    expect(screen.getByText('KindHearts Therapy Management Platform')).toBeInTheDocument()
-  })
-
-  it('renders View Project links for each card', () => {
-    render(<Projects />)
+  it('renders a card for every featured project', () => {
+    render(<Projects />, { wrapper })
+    expect(screen.getByText('AMADEUS')).toBeInTheDocument()
     const links = screen.getAllByRole('link', { name: /view project/i })
-    expect(links).toHaveLength(3)
+    expect(links).toHaveLength(PROJECTS.length)
   })
 
   it('each link opens in a new tab', () => {
-    render(<Projects />)
+    render(<Projects />, { wrapper })
     const links = screen.getAllByRole('link', { name: /view project/i })
     links.forEach(link => {
       expect(link).toHaveAttribute('target', '_blank')
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer')
     })
   })
 })
